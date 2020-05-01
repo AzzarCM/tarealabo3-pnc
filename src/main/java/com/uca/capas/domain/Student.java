@@ -9,7 +9,7 @@ public class Student {
 	private Boolean estado;
 	
 	
-	
+	public Student() {}
 	public Student(String nombre, String apellido, String fEntrada, String carrera, Boolean estado) {
 		super();
 		this.nombre = nombre;
@@ -47,6 +47,10 @@ public class Student {
 	}
 	public void setEstado(Boolean estado) {
 		this.estado = estado;
+	}
+	
+	public String delegateEstado() {
+		return estado ? "Activo" : "Inactivo";
 	}
 	
 	
