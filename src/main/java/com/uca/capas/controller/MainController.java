@@ -19,45 +19,7 @@ public class MainController {
 	private ArrayList<Product> components = new ArrayList<Product>();
 	private List<Student> students = new ArrayList<Student>();
 	
-	@GetMapping(path = "/ejemplo1", produces = MediaType.TEXT_PLAIN_VALUE)
-	@ResponseBody public String ejemplo1() {
-		return "Bienvenidos\n" + "PROGRAMACION NCPAS";
-	}
-	
-	
-	@GetMapping("/ejemplo2")
-	@ResponseBody public List<Student> ejemplo2(){
-		return Arrays.asList(
-				new Student("Nombre1", "Apellido","10/10/99","lemon ing",true),
-				new Student("Nombre2", "Apellido2","2/2/2001","sss ing",false));
-		
-	}
-	@GetMapping("/inicio")
-	public ModelAndView inicio(Student student) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("index");
-		return mav;
-	}
-	
-	@PostMapping("/formData")
-	public ModelAndView procesar(Student student) {
-		students.add(student);
-		
-		ModelAndView mav = new ModelAndView();
-		
-		
-		mav.setViewName("index");
-		mav.addObject("student", new Student());
-		
-		return mav;
-	}
-	
-	@GetMapping("/listado")
-	public ModelAndView listado() {
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("studentList", students);
-		return mav;
-	}
+
 	
 	@GetMapping("/compraProducto")
 	public ModelAndView compraProducto() {
@@ -65,13 +27,13 @@ public class MainController {
 		ModelAndView mav1 = new ModelAndView();
 		
 		components.add(new Product(0, "MOTHERBOARD ASUS 170-K", 10));
-		components.add(new Product(2, "RAM HYPERX 2X 8GB RGB", 20));
-		components.add(new Product(3, "THERMALTAKE 600V BRONCE", 20));
-		components.add(new Product(4, "SSD 860 EVO 480GB + HDD 500GB", 20));		
-		components.add(new Product(5, "EVGA GEFORCE GTX 760", 2)); //PROXIMO UPDATE:(
-		components.add(new Product(6, "INTEL I7 6700K", 5));
-		components.add(new Product(7, "KEYBOARD HYPERX ALLOY FPS", 5));
-		components.add(new Product(8, "MONITOR HP 25X 144HZ", 5));
+		components.add(new Product(1, "RAM HYPERX 2X 8GB RGB", 20));
+		components.add(new Product(2, "THERMALTAKE 600V BRONCE", 20));
+		components.add(new Product(3, "SSD 860 EVO 480GB + HDD 500GB", 20));		
+		components.add(new Product(4, "EVGA GEFORCE GTX 760", 2)); //PROXIMO UPDATE:(
+		components.add(new Product(5, "INTEL I7 6700K", 5));
+		components.add(new Product(6, "KEYBOARD HYPERX ALLOY FPS", 5));
+		components.add(new Product(7, "MONITOR HP 25X 144HZ", 5));
 		
 		mav1.setViewName("componentes");
 		mav1.addObject("product", new Product());
@@ -80,6 +42,19 @@ public class MainController {
 		
 		return mav1;
 		
+	}
+	@PostMapping("/validar")
+	@ResponseBody
+	public ModelAndView validarDato(Product componente) {
+		ModelAndView mav = new ModelAndView();
+		
+		if(components.get(componente.getId()).getCantidad() < componente.getCantidad()) {
+			mav.setViewName("/error");
+		}else {mav.setViewName("/compra");}
+		
+		mav.addObject("item", components.get(componente.getId()).getNombre());
+		
+		return mav;
 	}
 	
 

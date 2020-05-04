@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
 <body>
-
-<h1><th th:text="${estado}"></th></h1>
-<h1><th th:text="${student.getNombre()}"></th></h1>
-
+	<h1>No se puede comprar el producto:  <th th:text="${item}"/> </h1>
 </body>
 </html>
